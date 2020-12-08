@@ -15,6 +15,14 @@ from pprint import pprint
 from bs4 import BeautifulSoup
 import requests
 
+import selenium
+from selenium import webdriver 
+from selenium.webdriver.support.ui import WebDriverWait 
+from selenium.webdriver.support import expected_conditions as EC 
+from selenium.webdriver.common.keys import Keys 
+from selenium.webdriver.common.by import By 
+import time
+
 ######Covid19######
 c19_url='https://covid19.rs/'
 
@@ -31,6 +39,12 @@ access_token_secret='your api key here'
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
+
+#########WA###########
+driver = webdriver.Chrome('C:\\Program Files (x86)\\chromedriver.exe') 
+#if(check_selenium==False):
+driver.get("https://web.whatsapp.com/") 
+wait = WebDriverWait(driver, 30)
 
 URL_REGEX = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
 OPTIONS = {
@@ -496,7 +510,45 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         api.update_status(tweet_txt)
         await ctx.send('Tweet was sent')
 
+    @commands.command()
+    async def wa(self,ctx, *,message):
+       # print(message)
+        B='['
+        E=']'
+        target=message[message.find(B)+1: message.find(E)]
+        #print(message)
+        message_info=message.split(']',1)[1]
+        #print (message_info)
+        sea_xpath='//div[@class="_1awRl copyable-text selectable-text"][@contenteditable="true"][@data-tab="3"][@dir="ltr"]'
+        group_title = wait.until(EC.presence_of_element_located((By.XPATH, sea_xpath))) 
+        group_title.send_keys(target + Keys.ENTER)
+        inp_xpath = '//div[@class="_1awRl copyable-text selectable-text"][@contenteditable="true"][@data-tab="6"][@dir="ltr"][@spellcheck="true"]'
+        input_box = wait.until(EC.presence_of_element_located((By.XPATH, inp_xpath))) 
+        input_box.send_keys(message_info + Keys.ENTER)
+            
+        await ctx.send('Message was sent')
+    
 
+
+
+    @commands.command()
+    async def todo(self,ctx,*,task):
+        todos.append(task)
+        
+        #for i in todos:
+        #    await ctx.send(f'{str(i)}: {todos[i]}')
+
+    @commands.command()
+    async def active(self,ctx):
+        lenght=len(todos)
+        i=0
+        while i<lenght:
+            await ctx.send(f'{i}: {todos[i]}')
+            i+=1
+
+    @commands.command()
+    async def done(self,ctx,*,no):
+        todos.pop(int(no))
 
 def setup(bot):
     bot.add_cog(Music(bot))
