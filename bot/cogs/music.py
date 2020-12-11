@@ -29,22 +29,7 @@ c19_url='https://covid19.rs/'
 ######Weather######
 url_weather = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid={your api key here}}&units=metric'.format('Belgrade')
 
-######Twitter######
 
-consumer_key='your api key here'
-consumer_secret='your api key here'
-Tw_api_bearer='your api key here'
-access_token='your api key here'
-access_token_secret='your api key here'
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
-api = tweepy.API(auth)
-
-#########WA###########
-driver = webdriver.Chrome('C:\\Program Files (x86)\\chromedriver.exe') 
-#if(check_selenium==False):
-driver.get("https://web.whatsapp.com/") 
-wait = WebDriverWait(driver, 30)
 
 URL_REGEX = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
 OPTIONS = {
@@ -503,32 +488,8 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         deo=soup.find_all('p', class_='elementor-heading-title elementor-size-default')
         await ctx.send(f'Broj obolelih : {format(deo[12].text)} \nBroj preminulih : {format(deo[14].text)} ')
 
-
-    @commands.command()
-    @commands.has_role('Admin')
-    async def post(self,ctx, *, tweet_txt):
-        api.update_status(tweet_txt)
-        await ctx.send('Tweet was sent')
-
-    @commands.command()
-    async def wa(self,ctx, *,message):
-       # print(message)
-        B='['
-        E=']'
-        target=message[message.find(B)+1: message.find(E)]
-        #print(message)
-        message_info=message.split(']',1)[1]
-        #print (message_info)
-        sea_xpath='//div[@class="_1awRl copyable-text selectable-text"][@contenteditable="true"][@data-tab="3"][@dir="ltr"]'
-        group_title = wait.until(EC.presence_of_element_located((By.XPATH, sea_xpath))) 
-        group_title.send_keys(target + Keys.ENTER)
-        inp_xpath = '//div[@class="_1awRl copyable-text selectable-text"][@contenteditable="true"][@data-tab="6"][@dir="ltr"][@spellcheck="true"]'
-        input_box = wait.until(EC.presence_of_element_located((By.XPATH, inp_xpath))) 
-        input_box.send_keys(message_info + Keys.ENTER)
-            
-        await ctx.send('Message was sent')
     
-
+    todos=[]
 
 
     @commands.command()
