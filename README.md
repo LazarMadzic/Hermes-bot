@@ -11,9 +11,6 @@
 # ~post to Twitter(you need to provide API keys)
   +post text
   
-# ~send messages to Whatsapp(you need to scan QR code every time you launch a bot)
-  +wa [recipient] text
-  
 # ~simple TODO tracker
   +todo text +done no. +active
 
